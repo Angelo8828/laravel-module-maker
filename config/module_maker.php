@@ -9,7 +9,8 @@ return [
     |
     | This value determines the route file that the Laravel Module Maker will
     | utilize. The auto-generated routes will be placed at the bottom of the
-    | route file each time the command will be runned.
+    | route file each time the command will be runned. The default value is the
+    | location of the route file for Laravel 5.5
     |
     */
 
@@ -31,6 +32,19 @@ return [
     */
 
     'model_namespace' => env('MODULE_MAKE_MODEL_NAMESPACE', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Is Migration Enabled
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if auto-generation of database migration will be enabled.
+    | The auto-generated migrations will be placed inside the "database/migrations"
+    | directory. True by default.
+    |
+    */
+
+    'is_migration_enabled' => env('MODULE_MAKE_IS_MIGRATION_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
