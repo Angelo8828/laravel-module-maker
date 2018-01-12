@@ -4,7 +4,7 @@ namespace Angelo8828\MakeModule;
 
 use Illuminate\Console\Command;
 
-class MakeModuleCommand
+class MakeModuleCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -38,6 +38,6 @@ class MakeModuleCommand
      */
     public function handle()
     {
-        echo "Hello World!";
+        echo "Hello World! \n";
     }
 }
