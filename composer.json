@@ -20,5 +20,15 @@
         "psr-4": {
             "Angelo8828\\MakeModule\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Angelo8828\\MakeModule\\ModuleMakerServiceProvider"
+            ],
+            "aliases": {
+                "Mongo": "Angelo8828\\MakeModule\\ModuleMakerFacade"
+            }
+        }
     }
 }
