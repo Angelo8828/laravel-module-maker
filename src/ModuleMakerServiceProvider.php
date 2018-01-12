@@ -13,7 +13,11 @@ class ModuleMakerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MakeModuleCommand::class,
+            ]);
+        }
     }
 
     /**
