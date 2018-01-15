@@ -14,7 +14,7 @@ class ModuleMakerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/path/to/config/module_maker.php' => config_path('module_maker.php'),
+            realpath(__DIR__ . '/..').'/config/module_maker.php' => config_path('module_maker.php'),
         ]);
 
         if ($this->app->runningInConsole()) {
