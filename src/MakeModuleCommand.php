@@ -38,6 +38,34 @@ class MakeModuleCommand extends Command
      */
     public function handle()
     {
-        echo "Hello World! \n";
+        $this->generateModelAndMigration();
+
+        echo "Module generation completed! \n";
+    }
+
+    /*
+     * Generates the model and the migration
+     *
+     * @return mixed
+     */
+    public function generateModelAndMigration()
+    {
+        $modelNamespace = config('module_maker.model_namespace');
+
+        $isMigrationEnabled = config('module_maker.is_migration_enabled');
+
+        $moduleName = studly_case(str_singular($this->argument('name')));
+
+        if ($modelNamespace != '') {
+            $moduleName = $modelNamespace . '\\' . $moduleName;
+        }
+
+        $modelAndMigrationParameters['name'] = $moduleName;
+
+        if ($isMigrationEnabled) {
+            $modelAndMigrationParameters['--migration'] = 'default';
+        }
+
+        $this->call('make:model', $modelAndMigrationParameters);
     }
 }
