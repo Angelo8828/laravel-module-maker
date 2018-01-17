@@ -39,6 +39,7 @@ class MakeModuleCommand extends Command
     public function handle()
     {
         $this->generateModelAndMigration();
+        $this->generateController();
 
         echo "Module generation completed! \n";
     }
@@ -67,5 +68,20 @@ class MakeModuleCommand extends Command
         }
 
         $this->call('make:model', $modelAndMigrationParameters);
+    }
+
+    public function generateController()
+    {
+        $controllerNamespace = config('module_maker.controller_namespace');
+
+        $moduleName = studly_case(str_singular($this->argument('name')));
+
+        if ($controllerNamespace != '') {
+            $moduleName = $controllerNamespace . '\\' . $moduleName;
+        }
+
+        $this->call('make:controller', [
+            'name' => str_plural($moduleName) . 'Controller',
+        ]);
     }
 }
