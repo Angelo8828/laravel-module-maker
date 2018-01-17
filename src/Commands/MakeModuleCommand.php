@@ -1,6 +1,6 @@
 <?php
 
-namespace Angelo8828\MakeModule;
+namespace Angelo8828\MakeModule\Commands;
 
 use Illuminate\Console\Command;
 

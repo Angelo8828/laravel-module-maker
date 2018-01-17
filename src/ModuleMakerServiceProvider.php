@@ -19,8 +19,8 @@ class ModuleMakerServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                MakeModuleCommand::class,
-                MakeModuleInstallCommand::class,
+                Commands\MakeModuleCommand::class,
+                Commands\MakeModuleInstallCommand::class,
             ]);
         }
     }
