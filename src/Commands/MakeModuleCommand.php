@@ -3,6 +3,7 @@
 namespace Angelo8828\MakeModule\Commands;
 
 use Illuminate\Console\Command;
+use Angelo8828\MakeModule\Generators\RouteGenerator;
 
 class MakeModuleCommand extends Command
 {
@@ -94,7 +95,9 @@ class MakeModuleCommand extends Command
 
     public function generateRoutes()
     {
-        $routeStrings = file_get_contents(realpath(__DIR__ . '/../..').'/templates/routes.php');
+        $route = new RouteGenerator;
+
+        $route->generate($this->argument('name'));
 
         echo "Routes generated successfully. \n";
     }
