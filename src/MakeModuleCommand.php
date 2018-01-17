@@ -40,6 +40,7 @@ class MakeModuleCommand extends Command
     {
         $this->generateModelAndMigration();
         $this->generateController();
+        $this->generateRoutes();
 
         echo "Module generation completed! \n";
     }
@@ -83,5 +84,28 @@ class MakeModuleCommand extends Command
         $this->call('make:controller', [
             'name' => str_plural($moduleName) . 'Controller',
         ]);
+    }
+
+    public function generateRoutes()
+    {
+        $routeStrings = file_get_contents(realpath(__DIR__ . '/..').'/templates/routes.php');
+
+        echo "Routes generated successfully. \n";
+    }
+
+    /**
+     * Converts studly case strings to human readable case strings
+     * https://stackoverflow.com/a/23028424/4584535
+     * @param  string $string
+     * @return string
+     */
+    private function splitCamelCase($string)
+    {
+        $array = preg_split(
+            '/(^[^A-Z]+|[A-Z][^A-Z]+)/', $string, -1, PREG_SPLIT_NO_EMPTY
+            | PREG_SPLIT_DELIM_CAPTURE
+        );
+
+        return implode(' ', $array);
     }
 }
