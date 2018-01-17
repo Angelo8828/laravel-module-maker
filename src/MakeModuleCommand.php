@@ -75,15 +75,21 @@ class MakeModuleCommand extends Command
     {
         $controllerNamespace = config('module_maker.controller_namespace');
 
+        $isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
+
         $moduleName = studly_case(str_singular($this->argument('name')));
 
         if ($controllerNamespace != '') {
             $moduleName = $controllerNamespace . '\\' . $moduleName;
         }
 
-        $this->call('make:controller', [
-            'name' => str_plural($moduleName) . 'Controller',
-        ]);
+        $controllerParameters['name'] = str_plural($moduleName) . 'Controller';
+
+        if ($isResourceRoutingEnabled) {
+            $controllerParameters['--resource'] = 'default';
+        }
+
+        $this->call('make:controller', $controllerParameters);
     }
 
     public function generateRoutes()
