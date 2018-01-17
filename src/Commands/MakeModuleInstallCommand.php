@@ -37,7 +37,7 @@ class MakeModuleInstallCommand extends Command
      */
     public function handle()
     {
-        $sourceConfigFile = realpath(__DIR__ . '/..').'/config/module_maker.php';
+        $sourceConfigFile = realpath(__DIR__ . '/../..').'/config/module_maker.php';
 
         $destinationConfigFile = base_path('config/module_maker.php');
 

@@ -94,7 +94,7 @@ class MakeModuleCommand extends Command
 
     public function generateRoutes()
     {
-        $routeStrings = file_get_contents(realpath(__DIR__ . '/..').'/templates/routes.php');
+        $routeStrings = file_get_contents(realpath(__DIR__ . '/../..').'/templates/routes.php');
 
         echo "Routes generated successfully. \n";
     }
