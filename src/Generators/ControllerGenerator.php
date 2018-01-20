@@ -42,7 +42,7 @@ class ControllerGenerator
     {
         $moduleName = studly_case(str_singular($moduleName));
 
-        if ($controllerNamespace != '') {
+        if ($this->controllerNamespace != '') {
             $moduleName = $this->controllerNamespace . '\\' . $moduleName;
         }
 
