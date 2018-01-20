@@ -78,6 +78,8 @@ class MakeModuleCommand extends Command
         $controller = new ControllerGenerator;
 
         $controller->generate($this->argument('name'));
+
+        echo "Controller generated successfully. \n";
     }
 
     public function generateRoutes()

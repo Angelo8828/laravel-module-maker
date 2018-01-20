@@ -2,7 +2,7 @@
 
 namespace Angelo8828\MakeModule\Generators;
 
-use Illuminate\Console\Command;
+use Artisan;
 
 class ControllerGenerator
 {
@@ -52,7 +52,7 @@ class ControllerGenerator
             $controllerParameters['--resource'] = 'default';
         }
 
-        $this->call('make:controller', $controllerParameters);
+        Artisan::call('make:controller', $controllerParameters);
     }
 }
 
