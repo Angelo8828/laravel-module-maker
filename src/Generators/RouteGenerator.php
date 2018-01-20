@@ -67,7 +67,7 @@ class RouteGenerator
 
         $this->customRoutes();
 
-        file_put_contents(base_path($this->routeFile), $this->routeString, FILE_APPEND | LOCK_EX);
+        file_put_contents(base_path($this->routeFile), $this->routeString, FILE_APPEND);
     }
 
     public function resourceRoutes()
@@ -82,6 +82,8 @@ class RouteGenerator
 
     public function processRouteHeader()
     {
+        $this->moduleName = studly_case($this->moduleName);
+
         $this->routeString = "\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
     }
 
