@@ -5,6 +5,13 @@ namespace Angelo8828\MakeModule\Generators;
 class RouteGenerator
 {
     /**
+     * Module Name
+     *
+     * @var string
+     */
+    protected $moduleName;
+
+    /**
      * Application Route File
      *
      * @var string
@@ -26,17 +33,28 @@ class RouteGenerator
     protected $routeLetterCaseNamingConvention = 'slug';
 
     /**
+     * Route String Generated
+     *
+     * @var string
+     */
+    protected $routeString = '';
+
+    /**
      * Executes the generation of routes
      *
      * @return mixed
      */
     public function generate($moduleName)
     {
+        $this->moduleName = $moduleName;
+
         $this->routeFile = config('module_maker.route_file');
 
         $this->isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
 
         $this->routeLetterCaseNamingConvention = config('module_maker.route_letter_case_naming_convention');
+
+        $this->processRouteHeader();
 
         if ($this->isResourceRoutingEnabled) {
 
@@ -45,6 +63,8 @@ class RouteGenerator
         }
 
         $this->customRoutes();
+
+        file_put_contents(base_path($this->routeFile), $this->routeString, FILE_APPEND | LOCK_EX);
     }
 
     public function resourceRoutes()
@@ -55,6 +75,11 @@ class RouteGenerator
     public function customRoutes()
     {
         //
+    }
+
+    public function processRouteHeader()
+    {
+        $this->routeString = "\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
     }
 
     /**
