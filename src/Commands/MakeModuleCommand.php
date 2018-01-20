@@ -4,6 +4,7 @@ namespace Angelo8828\MakeModule\Commands;
 
 use Illuminate\Console\Command;
 use Angelo8828\MakeModule\Generators\RouteGenerator;
+use Angelo8828\MakeModule\Generators\ControllerGenerator;
 
 class MakeModuleCommand extends Command
 {
@@ -74,23 +75,9 @@ class MakeModuleCommand extends Command
 
     public function generateController()
     {
-        $controllerNamespace = config('module_maker.controller_namespace');
+        $controller = new ControllerGenerator;
 
-        $isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
-
-        $moduleName = studly_case(str_singular($this->argument('name')));
-
-        if ($controllerNamespace != '') {
-            $moduleName = $controllerNamespace . '\\' . $moduleName;
-        }
-
-        $controllerParameters['name'] = str_plural($moduleName) . 'Controller';
-
-        if ($isResourceRoutingEnabled) {
-            $controllerParameters['--resource'] = 'default';
-        }
-
-        $this->call('make:controller', $controllerParameters);
+        $controller->generate($this->argument('name'));
     }
 
     public function generateRoutes()
