@@ -65,6 +65,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Is Controller Name Plural
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if the name of the controller will be plural or not.
+    |
+    | Example usage:
+    | If set to TRUE, the auto-generated controllers will be having names like this:
+    | EmployeesController || PhotoOwnersControllers
+    |
+    | If set to FALSE, the auto-generated controllers will be having names like this:
+    | EmployeeController || PhotoOwnerControllers
+    |
+    */
+
+    'is_controller_name_plural' => env('MODULE_MAKE_IS_CONTROLLER_NAME_PLURAL', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Route Letter Case Naming Convention
     |--------------------------------------------------------------------------
     |
