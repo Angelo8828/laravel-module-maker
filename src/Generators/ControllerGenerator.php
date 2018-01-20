@@ -7,13 +7,6 @@ use Artisan;
 class ControllerGenerator
 {
     /**
-     * Module Name
-     *
-     * @var string
-     */
-    public $moduleName;
-
-    /**
      * Controller Namespace
      *
      * @var string
@@ -27,32 +20,57 @@ class ControllerGenerator
      */
     public $isResourceRoutingEnabled = false;
 
+    /**
+     * Is Controller Name Plural
+     *
+     * @var string
+     */
+    public $isControllerNamePlural = true;
+
     public function __construct()
     {
         $this->controllerNamespace = config('module_maker.controller_namespace');
+
         $this->isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
+
+        $this->isControllerNamePlural = config('module_maker.is_controller_name_plural');
     }
 
     /**
      * Executes the generation of controllers
      *
-     * @return mixed
      */
     public function generate($moduleName)
     {
-        $moduleName = studly_case(str_singular($moduleName));
-
-        if ($this->controllerNamespace != '') {
-            $moduleName = $this->controllerNamespace . '\\' . $moduleName;
-        }
-
-        $controllerParameters['name'] = str_plural($moduleName) . 'Controller';
+        $controllerParameters['name'] = $this->processName($moduleName);
 
         if ($this->isResourceRoutingEnabled) {
             $controllerParameters['--resource'] = 'default';
         }
 
         Artisan::call('make:controller', $controllerParameters);
+    }
+
+    /**
+     * Process controller's name with namespace
+     *
+     * @param  string $moduleName
+     * @return string
+     */
+    public function processName($moduleName)
+    {
+        $controllerName = studly_case($moduleName);
+
+        $controllerName = str_singular($controllerName);
+        if ($this->isControllerNamePlural) {
+            $controllerName = str_plural($controllerName);
+        }
+
+        if ($this->controllerNamespace != '') {
+            $controllerName = $this->controllerNamespace . '\\' . $controllerName;
+        }
+
+        return $controllerName . 'Controller';
     }
 }
 
