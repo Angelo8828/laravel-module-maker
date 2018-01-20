@@ -26,9 +26,6 @@
             "providers": [
                 "Angelo8828\\MakeModule\\ModuleMakerServiceProvider"
             ],
-            "aliases": {
-                "Mongo": "Angelo8828\\MakeModule\\ModuleMakerFacade"
-            }
         }
     }
 }
