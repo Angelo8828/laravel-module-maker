@@ -39,6 +39,15 @@ class RouteGenerator
      */
     protected $routeString = '';
 
+    public function __construct()
+    {
+        $this->routeFile = config('module_maker.route_file');
+
+        $this->isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
+
+        $this->routeLetterCaseNamingConvention = config('module_maker.route_letter_case_naming_convention');
+    }
+
     /**
      * Executes the generation of routes
      *
@@ -47,12 +56,6 @@ class RouteGenerator
     public function generate($moduleName)
     {
         $this->moduleName = $moduleName;
-
-        $this->routeFile = config('module_maker.route_file');
-
-        $this->isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
-
-        $this->routeLetterCaseNamingConvention = config('module_maker.route_letter_case_naming_convention');
 
         $this->processRouteHeader();
 
