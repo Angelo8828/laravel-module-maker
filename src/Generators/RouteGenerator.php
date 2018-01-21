@@ -82,7 +82,7 @@ class RouteGenerator
     {
         $controller = new ControllerGenerator;
 
-        $this->routeString .= "Route::resource('" .$this->processNameConvention($this->moduleName). "', '" .$controller->processName($this->moduleName) . "'); \n";
+        $this->routeString .= "Route::resource('" .str_plural($this->processNameConvention($this->moduleName)). "', '" .$controller->processName($this->moduleName) . "'); \n";
     }
 
     public function customRoutes()
@@ -99,7 +99,7 @@ class RouteGenerator
 
     public function processNameConvention($routeName)
     {
-        $routeName = str_plural($this->splitCamelCase($routeName));
+        $routeName = $this->splitCamelCase($routeName);
 
         if ($this->routeLetterCaseNamingConvention == 'snake') {
             return snake_case($routeName);
