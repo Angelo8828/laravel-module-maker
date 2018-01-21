@@ -57,7 +57,7 @@ class RouteGenerator
     {
         $this->moduleName = $moduleName;
 
-        $this->processRouteHeader();
+        $this->processHeader();
 
         if ($this->isResourceRoutingEnabled) {
 
@@ -72,7 +72,9 @@ class RouteGenerator
 
     public function resourceRoutes()
     {
-        //
+        $controller = new ControllerGenerator;
+
+        $this->routeString .= "Route::resource('" .$this->processNameConvention($this->moduleName). "'," .$controller->processName($this->moduleName) . ") \n";
     }
 
     public function customRoutes()
@@ -80,11 +82,20 @@ class RouteGenerator
         //
     }
 
-    public function processRouteHeader()
+    public function processHeader()
     {
         $this->moduleName = studly_case($this->moduleName);
 
         $this->routeString = "\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
+    }
+
+    public function processNameConvention($routeName)
+    {
+        if ($this->routeLetterCaseNamingConvention == 'snake') {
+            return snake_case($routeName);
+        }
+
+        return str_slug($routeName);
     }
 
     /**
