@@ -86,7 +86,10 @@ class MakeModuleCommand extends Command
     {
         $route = new RouteGenerator;
 
-        $route->generate($this->argument('name'));
+        if (!$route->generate($this->argument('name'))) {
+            echo "Error! Routes has not been created. Please check if route file is existing or permission to write is enabled. \n";
+            return;
+        }
 
         echo "Routes generated successfully. \n";
     }

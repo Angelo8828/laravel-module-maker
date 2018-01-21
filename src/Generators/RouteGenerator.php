@@ -67,7 +67,17 @@ class RouteGenerator
 
         $this->customRoutes();
 
-        file_put_contents(base_path($this->routeFile), $this->routeString, FILE_APPEND);
+        if (!$routeFile = fopen(base_path($this->routeFile), "a")) {
+            return false;
+        }
+
+        if (!fwrite($routeFile, $this->routeString)) {
+            return false;
+        }
+
+        fclose($routeFile);
+
+        return true;
     }
 
     public function resourceRoutes()
