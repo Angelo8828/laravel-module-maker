@@ -105,7 +105,17 @@ class RouteGenerator
 
     public function customRoutes()
     {
-        //
+        $customRouteString = '';
+
+        if ($this->routeCustomTemplateFile != '') {
+            $customRouteString = file_get_contents(base_path($this->routeCustomTemplateFile));
+        }
+
+        if ($customRouteString == '' || !$customRouteString) {
+            $customRouteString = file_get_contents(realpath(__DIR__ . '/../..') . '/templates/routes.php');
+        }
+
+        $this->routeString .= $customRouteString;
     }
 
     public function processHeader()
