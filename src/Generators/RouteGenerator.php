@@ -99,7 +99,7 @@ class RouteGenerator
 
     public function processNameConvention($routeName)
     {
-        $routeName = $this->splitCamelCase($routeName);
+        $routeName = str_plural($this->splitCamelCase($routeName));
 
         if ($this->routeLetterCaseNamingConvention == 'snake') {
             return snake_case($routeName);
