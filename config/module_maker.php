@@ -110,7 +110,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Are Named Routes Enabled?
+    | Is Named Routing Enabled?
     |--------------------------------------------------------------------------
     |
     | This value determines if the routes that will be auto-generated will have
@@ -118,5 +118,5 @@ return [
     |
     */
 
-    'is_named_routes_enabled' => env('MODULE_MAKE_IS_NAMED_ROUTES_ENABLED', true),
+    'is_named_routing_enabled' => env('MODULE_MAKE_IS_NAMED_ROUTING_ENABLED', true),
 ];
