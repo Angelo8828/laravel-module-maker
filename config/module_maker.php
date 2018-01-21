@@ -83,19 +83,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Route Letter Case Naming Convention
-    |--------------------------------------------------------------------------
-    |
-    | This value determines the route letter case naming convention that will be applied
-    | and followed in the auto-generation of routes. Only two letter cases, "slug" and "snake"
-    | are currently acceptable. The default case will be "slug".
-    |
-    */
-
-    'route_letter_case_naming_convention' => env('MODULE_MAKE_ROUTE_LETTER_CASE_NAMING_CONVENTION', 'slug'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Route File
     |--------------------------------------------------------------------------
     |
@@ -110,7 +97,34 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Is Named Routing Enabled?
+    | Route Custom Template File
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the custom template file that will be used to
+    | auto-generate the routes. If there's no custom template file, the default
+    | template of the package will be used. Please leave it as empty if there will
+    | be no route template file.
+    |
+    */
+
+    'route_custom_template_file' => env('MODULE_MAKE_ROUTE_CUSTOM_TEMPLATE_FILE', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Route Letter Case Naming Convention
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the route letter case naming convention that will be applied
+    | and followed in the auto-generation of routes. Only two letter cases, "slug" and "snake"
+    | are currently acceptable. The default case will be "slug".
+    |
+    */
+
+    'route_letter_case_naming_convention' => env('MODULE_MAKE_ROUTE_LETTER_CASE_NAMING_CONVENTION', 'slug'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Are Named Routes Enabled?
     |--------------------------------------------------------------------------
     |
     | This value determines if the routes that will be auto-generated will have
@@ -118,5 +132,5 @@ return [
     |
     */
 
-    'is_named_routing_enabled' => env('MODULE_MAKE_IS_NAMED_ROUTING_ENABLED', true),
+    'is_named_routes_enabled' => env('MODULE_MAKE_IS_NAMED_ROUTES_ENABLED', true),
 ];
