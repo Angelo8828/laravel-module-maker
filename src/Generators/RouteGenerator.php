@@ -60,12 +60,10 @@ class RouteGenerator
         $this->processHeader();
 
         if ($this->isResourceRoutingEnabled) {
-
             $this->resourceRoutes();
-            return;
+        } else {
+            $this->customRoutes();
         }
-
-        $this->customRoutes();
 
         if (!$routeFile = fopen(base_path($this->routeFile), "a")) {
             return false;
@@ -84,7 +82,7 @@ class RouteGenerator
     {
         $controller = new ControllerGenerator;
 
-        $this->routeString .= "Route::resource('" .$this->processNameConvention($this->moduleName). "'," .$controller->processName($this->moduleName) . ") \n";
+        $this->routeString .= "Route::resource('" .$this->processNameConvention($this->moduleName). "', '" .$controller->processName($this->moduleName) . "'); \n";
     }
 
     public function customRoutes()
@@ -101,6 +99,8 @@ class RouteGenerator
 
     public function processNameConvention($routeName)
     {
+        $routeName = $this->splitCamelCase($routeName);
+
         if ($this->routeLetterCaseNamingConvention == 'snake') {
             return snake_case($routeName);
         }
