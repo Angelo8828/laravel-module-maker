@@ -12,6 +12,13 @@ class RouteGenerator
     protected $moduleName;
 
     /**
+     * Route String Generated
+     *
+     * @var string
+     */
+    protected $routeString = '';
+
+    /**
      * Application Route File
      *
      * @var string
@@ -19,11 +26,11 @@ class RouteGenerator
     protected $routeFile;
 
     /**
-     * Is Resource Routing Enabled?
+     * Route Custom Template File
      *
-     * @var boolean
+     * @var string
      */
-    protected $isResourceRoutingEnabled = false;
+    protected $routeCustomTemplateFile;
 
     /**
      * Route Letter Case Naming Convention
@@ -33,19 +40,30 @@ class RouteGenerator
     protected $routeLetterCaseNamingConvention = 'slug';
 
     /**
-     * Route String Generated
+     * Is Resource Routing Enabled?
      *
-     * @var string
+     * @var boolean
      */
-    protected $routeString = '';
+    protected $isResourceRoutingEnabled = false;
+
+    /**
+     * Is Named Routing Enabled?
+     *
+     * @var boolean
+     */
+    protected $isNamedRoutingEnabled = true;
 
     public function __construct()
     {
         $this->routeFile = config('module_maker.route_file');
 
-        $this->isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
+        $this->routeCustomTemplateFile = config('module_maker.route_custom_template_file');
 
         $this->routeLetterCaseNamingConvention = config('module_maker.route_letter_case_naming_convention');
+
+        $this->isResourceRoutingEnabled = config('module_maker.is_resource_routing_enabled');
+
+        $this->isNamedRoutingEnabled = config('module_maker.is_named_routing_enabled');
     }
 
     /**
