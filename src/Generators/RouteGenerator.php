@@ -5,6 +5,13 @@ namespace Angelo8828\MakeModule\Generators;
 class RouteGenerator
 {
     /**
+     * Controller Generator instance
+     *
+     * @var class
+     */
+    protected $controller;
+
+    /**
      * Module Name
      *
      * @var string
@@ -55,6 +62,8 @@ class RouteGenerator
 
     public function __construct()
     {
+        $this->controller = new ControllerGenerator;
+
         $this->routeFile = config('module_maker.route_file');
 
         $this->routeCustomTemplateFile = config('module_maker.route_custom_template_file');
@@ -98,9 +107,7 @@ class RouteGenerator
 
     public function resourceRoutes()
     {
-        $controller = new ControllerGenerator;
-
-        $this->routeString .= "Route::resource('" .str_plural($this->processNameConvention($this->moduleName)). "', '" .$controller->processName($this->moduleName) . "'); \n";
+        $this->routeString .= "Route::resource('" .str_plural($this->processNameConvention($this->moduleName)). "', '" .$this->controller->processName($this->moduleName) . "'); \n";
     }
 
     public function customRoutes()
@@ -116,12 +123,12 @@ class RouteGenerator
         }
 
         if (!$this->isNamedRoutingEnabled) {
-            $customRouteString = $this->removeNamedRoutes($customRouteString);
+            $customRouteString = trim(preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString));
         }
 
-        $customRouteString = $this->replaceCustomRoutes($customRouteString);
+        $customRouteString = str_replace('template-123', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
 
-        $customRouteString = $this->replaceCustomControllerNames($customRouteString);
+        $customRouteString = str_replace('Template123Controller', $this->controller->processName($this->moduleName), $customRouteString);
 
         $this->routeString .= $customRouteString;
     }
@@ -158,23 +165,6 @@ class RouteGenerator
         );
 
         return implode(' ', $array);
-    }
-
-    private function removeNamedRoutes($customRouteString)
-    {
-        return trim(preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString));
-    }
-
-    private function replaceCustomRoutes($customRouteString)
-    {
-        return str_replace('template-123', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
-    }
-
-    private function replaceCustomControllerNames($customRouteString)
-    {
-        $controller = new ControllerGenerator;
-
-        return str_replace('Template123Controller', $controller->processName($this->moduleName), $customRouteString);
     }
 }
 
