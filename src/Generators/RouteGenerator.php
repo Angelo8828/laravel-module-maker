@@ -119,6 +119,10 @@ class RouteGenerator
             $customRouteString = $this->removeNamedRoutes($customRouteString);
         }
 
+        $customRouteString = $this->replaceCustomRoutes($customRouteString);
+
+        $customRouteString = $this->replaceCustomControllerNames($customRouteString);
+
         $this->routeString .= $customRouteString;
     }
 
@@ -126,7 +130,7 @@ class RouteGenerator
     {
         $this->moduleName = studly_case($this->moduleName);
 
-        $this->routeString = "\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
+        $this->routeString = "\n\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
     }
 
     public function processNameConvention($routeName)
@@ -159,6 +163,18 @@ class RouteGenerator
     private function removeNamedRoutes($customRouteString)
     {
         return trim(preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString));
+    }
+
+    private function replaceCustomRoutes($customRouteString)
+    {
+        return str_replace('template-123', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
+    }
+
+    private function replaceCustomControllerNames($customRouteString)
+    {
+        $controller = new ControllerGenerator;
+
+        return str_replace('Template123Controller', $controller->processName($this->moduleName), $customRouteString);
     }
 }
 
