@@ -115,6 +115,10 @@ class RouteGenerator
             $customRouteString = file_get_contents(realpath(__DIR__ . '/../..') . '/templates/routes.php');
         }
 
+        if (!$this->isNamedRoutingEnabled) {
+            $customRouteString = $this->removeNamedRoutes($customRouteString);
+        }
+
         $this->routeString .= $customRouteString;
     }
 
@@ -150,6 +154,11 @@ class RouteGenerator
         );
 
         return implode(' ', $array);
+    }
+
+    private function removeNamedRoutes($customRouteString)
+    {
+        return trim(preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString));
     }
 }
 
