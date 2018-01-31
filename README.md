@@ -12,6 +12,6 @@ Developer-friendly, painless and simplistic CRUD Generator for Laravel
 2. After the installation, type `php artisan make-module:install`
 
 ## Usage
-To create a CRUD module, type `php artisan make:module <name of module>` 
+To create a CRUD module, type `php artisan make:module <name of module>`
 
-*Code under development*
+### *Code under development*
