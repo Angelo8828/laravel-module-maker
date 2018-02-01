@@ -82,6 +82,10 @@ class RouteGenerator
      */
     public function generate($moduleName)
     {
+        if ($this->routeCustomTemplateFile != '' && !file_exists(base_path($this->routeCustomTemplateFile))) {
+            return false;
+        }
+
         $this->moduleName = $moduleName;
 
         $this->processHeader();
@@ -123,7 +127,7 @@ class RouteGenerator
         }
 
         if (!$this->isNamedRoutingEnabled) {
-            $customRouteString = trim(preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString));
+            $customRouteString = preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString);
         }
 
         $customRouteString = str_replace('template-123s', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
@@ -132,7 +136,11 @@ class RouteGenerator
 
         $customRouteString = str_replace('Template123Controller', $this->controller->processName($this->moduleName), $customRouteString);
 
-        $this->routeString .= $customRouteString;
+        if ($this->routeLetterCaseNamingConvention == 'snake') {
+            $customRouteString = preg_replace('/-(?=[^()]*\))/', '_', $customRouteString);
+        }
+
+        $this->routeString .= trim($customRouteString);
     }
 
     public function processHeader()
