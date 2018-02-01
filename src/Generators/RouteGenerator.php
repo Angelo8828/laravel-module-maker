@@ -126,7 +126,9 @@ class RouteGenerator
             $customRouteString = trim(preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString));
         }
 
-        $customRouteString = str_replace('template-123', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
+        $customRouteString = str_replace('template-123s', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
+
+        $customRouteString = str_replace('template-123', str_singular($this->processNameConvention($this->moduleName)), $customRouteString);
 
         $customRouteString = str_replace('Template123Controller', $this->controller->processName($this->moduleName), $customRouteString);
 
