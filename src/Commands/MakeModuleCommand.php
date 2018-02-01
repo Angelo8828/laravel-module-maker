@@ -44,7 +44,7 @@ class MakeModuleCommand extends Command
         $this->generateController();
         $this->generateRoutes();
 
-        echo "Module generation completed! \n";
+        echo "\033[32mModule generation completed!\033[0m \n";
     }
 
     /*
@@ -79,7 +79,7 @@ class MakeModuleCommand extends Command
 
         $controller->generate($this->argument('name'));
 
-        echo "Controller generated successfully. \n";
+        echo "\033[32mController generated successfully.\033[0m \n";
     }
 
     public function generateRoutes()
@@ -87,10 +87,10 @@ class MakeModuleCommand extends Command
         $route = new RouteGenerator;
 
         if (!$route->generate($this->argument('name'))) {
-            echo "Error! Routes has not been created. Please check if route file is existing or permission to write is enabled. \n";
+            echo "\033[31mError! Routes has not been created. Please check if route file is existing or permission to write is enabled.\033[0m \n";
             return;
         }
 
-        echo "Routes generated successfully. \n";
+        echo "\033[32mRoutes generated successfully.\033[0m \n";
     }
 }
