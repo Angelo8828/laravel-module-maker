@@ -193,13 +193,14 @@ class RouteGenerator
 
     /**
      * Remove PHP tags
-     * 
+     *
      * @param  string $customRouteString
      * @return string
      */
     private function removePHPTags($customRouteString)
     {
-        return str_replace('<?php', '', $customRouteString);
+        $customRouteString = str_replace('<?php', '', $customRouteString);
+        return str_replace('?>', '', $customRouteString);
     }
 
     /**
