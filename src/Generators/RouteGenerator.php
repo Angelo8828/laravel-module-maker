@@ -122,22 +122,24 @@ class RouteGenerator
             $customRouteString = file_get_contents(base_path($this->routeCustomTemplateFile));
         }
 
-        if ($customRouteString == '' || !$customRouteString) {
+        if ($customRouteString == '') {
             $customRouteString = file_get_contents(realpath(__DIR__ . '/../..') . '/templates/routes.php');
         }
 
         if (!$this->isNamedRoutingEnabled) {
-            $customRouteString = preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString);
+            $customRouteString = $this->removeNamedRoutes($customRouteString);
         }
 
-        $customRouteString = str_replace('template-123s', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
+        $customRouteString = $this->removePHPTags($customRouteString);
 
-        $customRouteString = str_replace('template-123', str_singular($this->processNameConvention($this->moduleName)), $customRouteString);
+        $customRouteString = $this->replaceTemplateSingularRoutes($customRouteString);
 
-        $customRouteString = str_replace('Template123Controller', $this->controller->processName($this->moduleName), $customRouteString);
+        $customRouteString = $this->replaceTemplatePluralRoutes($customRouteString);
+
+        $customRouteString = $this->replaceTemplateControllerNames($customRouteString);
 
         if ($this->routeLetterCaseNamingConvention == 'snake') {
-            $customRouteString = preg_replace('/-(?=[^()]*\))/', '_', $customRouteString);
+            $customRouteString = $this->replaceToSnakeRoutes($customRouteString);
         }
 
         $this->routeString .= trim($customRouteString);
@@ -164,6 +166,7 @@ class RouteGenerator
     /**
      * Converts studly case strings to human readable case strings
      * https://stackoverflow.com/a/23028424/4584535
+     *
      * @param  string $string
      * @return string
      */
@@ -175,6 +178,72 @@ class RouteGenerator
         );
 
         return implode(' ', $array);
+    }
+
+    /**
+     * Removed named routes
+     *
+     * @param  string $customRouteString
+     * @return string
+     */
+    private function removeNamedRoutes($customRouteString)
+    {
+        return preg_replace('/->name([\s\S]*?)\x29/', '', $customRouteString);
+    }
+
+    /**
+     * Remove PHP tags
+     * 
+     * @param  string $customRouteString
+     * @return string
+     */
+    private function removePHPTags($customRouteString)
+    {
+        return str_replace('<?php', '', $customRouteString);
+    }
+
+    /**
+     * Replace templates for singular routes
+     *
+     * @param  string $customRouteString
+     * @return string
+     */
+    private function replaceTemplateSingularRoutes($customRouteString)
+    {
+        return str_replace('template-123', str_singular($this->processNameConvention($this->moduleName)), $customRouteString);
+    }
+
+    /**
+     * Replace templates for plural routes
+     *
+     * @param  string $customRouteString
+     * @return string
+     */
+    private function replaceTemplatePluralRoutes($customRouteString)
+    {
+        return str_replace('template-123s', str_plural($this->processNameConvention($this->moduleName)), $customRouteString);
+    }
+
+    /**
+     * Replace templates for controller names
+     *
+     * @param  string $customRouteString
+     * @return string
+     */
+    private function replaceTemplateControllerNames($customRouteString)
+    {
+        return str_replace('Template123Controller', $this->controller->processName($this->moduleName), $customRouteString);
+    }
+
+    /**
+     * Replace slug routes to snake routes
+     *
+     * @param  string $customRouteString
+     * @return string
+     */
+    private function replaceToSnakeRoutes($customRouteString)
+    {
+        return preg_replace('/-(?=[^()]*\))/', '_', $customRouteString);
     }
 }
 
