@@ -3,6 +3,7 @@
 namespace Angelo8828\MakeModule\Commands;
 
 use Illuminate\Console\Command;
+use Angelo8828\MakeModule\Libraries\OutputFormatter;
 use Angelo8828\MakeModule\Generators\RouteGenerator;
 use Angelo8828\MakeModule\Generators\ControllerGenerator;
 
@@ -30,6 +31,8 @@ class MakeModuleCommand extends Command
      */
     public function __construct()
     {
+        $this->outputFormatter = new OutputFormatter;
+
         parent::__construct();
     }
 
@@ -44,7 +47,7 @@ class MakeModuleCommand extends Command
         $this->generateController();
         $this->generateRoutes();
 
-        echo "\033[32mModule generation completed!\033[0m \n";
+        echo $this->outputFormatter->wrapSuccessMessage("Module generation completed!");
     }
 
     /*
@@ -79,7 +82,7 @@ class MakeModuleCommand extends Command
 
         $controller->generate($this->argument('name'));
 
-        echo "\033[32mController generated successfully.\033[0m \n";
+        echo $this->outputFormatter->wrapSuccessMessage("Controller generated successfully.");
     }
 
     public function generateRoutes()
@@ -87,10 +90,10 @@ class MakeModuleCommand extends Command
         $route = new RouteGenerator;
 
         if (!$route->generate($this->argument('name'))) {
-            echo "\033[31mError! Routes has not been created. Please check if route file is existing or permission to write is enabled.\033[0m \n";
+            echo $this->outputFormatter->wrapErrorMessage("Error! Routes has not been created. Please check if route file is existing or permission to write is enabled.");
             return;
         }
 
-        echo "\033[32mRoutes generated successfully.\033[0m \n";
+        echo $this->outputFormatter->wrapSuccessMessage("Routes generated successfully.");
     }
 }

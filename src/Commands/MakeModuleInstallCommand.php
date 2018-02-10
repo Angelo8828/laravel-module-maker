@@ -3,6 +3,7 @@
 namespace Angelo8828\MakeModule\Commands;
 
 use Illuminate\Console\Command;
+use Angelo8828\MakeModule\Libraries\OutputFormatter;
 
 class MakeModuleInstallCommand extends Command
 {
@@ -27,6 +28,8 @@ class MakeModuleInstallCommand extends Command
      */
     public function __construct()
     {
+        $this->outputFormatter = new OutputFormatter;
+
         parent::__construct();
     }
 
@@ -42,10 +45,10 @@ class MakeModuleInstallCommand extends Command
         $destinationConfigFile = base_path('config/module_maker.php');
 
         if (!copy($sourceConfigFile, $destinationConfigFile)) {
-            echo "Error! Module maker configuration file has not been created. \n";
+            echo $this->outputFormatter->wrapErrorMessage("Error! Module maker configuration file has not been created.");
             return;
         }
 
-        echo "Module maker configuration file created! \n";
+        echo $this->outputFormatter->wrapSuccessMessage("Module maker configuration file created!");
     }
 }
