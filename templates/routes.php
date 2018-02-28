@@ -1,3 +1,5 @@
+<?php
+
 $router->get('template-123s', 'Template123Controller@index')->name('template-123s');
 $router->get('template-123s/{id}', 'Template123Controller@show')->name('get-template-123');
 $router->get('template-123s/new', 'Template123Controller@create')->name('new-template-123');

@@ -47,6 +47,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Controller Custom Template File
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the custom template file that will be used to
+    | auto-generate the controllers. If there's no custom template file, the default
+    | template of the package will be used. Please leave it as empty if there will
+    | be no controller template file.
+    |
+    */
+
+    'controller_custom_template_file' => env('MODULE_MAKE_CONTROLLER_CUSTOM_TEMPLATE_FILE', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | Controller Namespace
     |--------------------------------------------------------------------------
     |
