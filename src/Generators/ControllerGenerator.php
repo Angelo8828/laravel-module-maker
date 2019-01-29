@@ -124,12 +124,14 @@ class ControllerGenerator
     /**
      * Process controller's name with namespace
      *
-     * @param  string $moduleName
+     * @param  string $controllerName
      * @return string
      */
-    public function processName()
+    public function processName($controllerName = null)
     {
-        $controllerName = studly_case($this->moduleName);
+        if (empty($controllerName)) {
+            $controllerName = studly_case($this->moduleName);
+        }
 
         $controllerName = str_singular($controllerName);
         if ($this->isControllerNamePlural) {
