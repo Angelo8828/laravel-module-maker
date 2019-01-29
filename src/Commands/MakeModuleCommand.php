@@ -50,7 +50,7 @@ class MakeModuleCommand extends Command
         echo $this->outputFormatter->wrapSuccessMessage("Module generation completed!");
     }
 
-    /*
+    /**
      * Generates the model and the migration
      *
      * @return mixed
@@ -76,6 +76,11 @@ class MakeModuleCommand extends Command
         $this->call('make:model', $modelAndMigrationParameters);
     }
 
+    /**
+     * Generates the controller
+     *
+     * @return mixed
+     */
     public function generateController()
     {
         $controller = new ControllerGenerator;
@@ -85,6 +90,11 @@ class MakeModuleCommand extends Command
         echo $this->outputFormatter->wrapSuccessMessage("Controller generated successfully.");
     }
 
+    /**
+     * Generate routes
+     *
+     * @return mixed
+     */
     public function generateRoutes()
     {
         $route = new RouteGenerator;

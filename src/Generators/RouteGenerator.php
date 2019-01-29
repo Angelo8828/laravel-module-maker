@@ -60,6 +60,11 @@ class RouteGenerator
      */
     protected $isNamedRoutingEnabled = true;
 
+    /**
+     * Class constructor.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->controller = new ControllerGenerator;
@@ -109,11 +114,33 @@ class RouteGenerator
         return true;
     }
 
+    /**
+     * Appends route header comment to the routeString
+     *
+     * @return void
+     */
+    public function processHeader()
+    {
+        $this->moduleName = studly_case($this->moduleName);
+
+        $this->routeString = "\n\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
+    }
+
+    /**
+     * Appends resource routes to the routeString
+     *
+     * @return void
+     */
     public function resourceRoutes()
     {
         $this->routeString .= "Route::resource('" .str_plural($this->processNameConvention($this->moduleName)). "', '" .$this->controller->processName($this->moduleName) . "'); \n";
     }
 
+    /**
+     * Appends custom routes to the routeString according to the configuration specified
+     *
+     * @return void
+     */
     public function customRoutes()
     {
         $customRouteString = '';
@@ -145,13 +172,12 @@ class RouteGenerator
         $this->routeString .= trim($customRouteString);
     }
 
-    public function processHeader()
-    {
-        $this->moduleName = studly_case($this->moduleName);
-
-        $this->routeString = "\n\n" . '// Routes for ' . str_plural($this->splitCamelCase($this->moduleName)) . "\n";
-    }
-
+    /**
+     * Changes the parameter string according to the specified route convention
+     *
+     * @param  string $routeName
+     * @return string
+     */
     public function processNameConvention($routeName)
     {
         $routeName = $this->splitCamelCase($routeName);

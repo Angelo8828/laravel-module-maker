@@ -41,6 +41,11 @@ class ControllerGenerator
      */
     public $isControllerNamePlural = true;
 
+    /**
+     * Class constructor.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->controllerNamespace = config('module_maker.controller_namespace');
@@ -55,6 +60,7 @@ class ControllerGenerator
     /**
      * Executes the generation of controllers
      *
+     * @return boolean
      */
     public function generate($moduleName)
     {
@@ -67,13 +73,18 @@ class ControllerGenerator
         if ($this->controllerCustomTemplateFile != '') {
             $this->customController();
         } else {
-            $this->normalController();
+            $this->defaultController();
         }
 
         return true;
     }
 
-    public function normalController()
+    /**
+     * Generates default controller
+     *
+     * @return void
+     */
+    public function defaultController()
     {
         $controllerParameters['name'] = $this->processName();
 
@@ -84,6 +95,11 @@ class ControllerGenerator
         Artisan::call('make:controller', $controllerParameters);
     }
 
+    /**
+     * Generates custom controller
+     *
+     * @return void
+     */
     public function customController()
     {
         $customControllerString = file_get_contents(base_path($this->controllerCustomTemplateFile));
@@ -92,17 +108,17 @@ class ControllerGenerator
 
         $customControllerString = str_replace('Template123s', str_plural(studly_case($this->moduleName)), $customControllerString);
 
-        $controllerFile = 'app/Http/Controllers/'. $this->processName() .'.php';
+        $controllerFileName = 'app/Http/Controllers/'. $this->processName() .'.php';
 
-        if (!$routeFile = fopen(base_path($controllerFile), "a")) {
+        if (!$controllerFile = fopen(base_path($controllerFileName), "a")) {
             return false;
         }
 
-        if (!fwrite($routeFile, $customControllerString)) {
+        if (!fwrite($controllerFile, $customControllerString)) {
             return false;
         }
 
-        fclose($routeFile);
+        fclose($controllerFile);
     }
 
     /**
