@@ -60,6 +60,7 @@ class ControllerGenerator
     /**
      * Executes the generation of controllers
      *
+     * @param string $moduleName
      * @return boolean
      */
     public function generate($moduleName)
@@ -145,5 +146,3 @@ class ControllerGenerator
         return $controllerName . 'Controller';
     }
 }
-
-?>

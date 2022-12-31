@@ -2,6 +2,11 @@
 
 namespace Angelo8828\MakeModule\Generators;
 
+/**
+ * Class for generating routes
+ *
+ * @author Angelo Joseph M. Salvador <angelo8828@gmail.com>
+ */
 class RouteGenerator
 {
     /**
@@ -199,7 +204,10 @@ class RouteGenerator
     private function splitCamelCase($string)
     {
         $array = preg_split(
-            '/(^[^A-Z]+|[A-Z][^A-Z]+)/', $string, -1, PREG_SPLIT_NO_EMPTY
+            '/(^[^A-Z]+|[A-Z][^A-Z]+)/',
+            $string,
+            -1,
+            PREG_SPLIT_NO_EMPTY
             | PREG_SPLIT_DELIM_CAPTURE
         );
 
@@ -273,5 +281,3 @@ class RouteGenerator
         return preg_replace('/-(?=[^()]*\))/', '_', $customRouteString);
     }
 }
-
-?>

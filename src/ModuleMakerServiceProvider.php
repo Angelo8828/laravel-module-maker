@@ -33,7 +33,8 @@ class ModuleMakerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            realpath(__DIR__ . '/..').'/config/module_maker.php', 'module_maker'
+            realpath(__DIR__ . '/..').'/config/module_maker.php',
+            'module_maker'
         );
     }
 }
